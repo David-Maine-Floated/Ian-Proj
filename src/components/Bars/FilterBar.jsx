@@ -6,57 +6,68 @@ import { useAddFilter, useRemoveFilter, useResetFilters, useFilters,
 
 export const FilterBar = () => {
 
+  const [active1, setActive1] = useState(false)
+  const [active2, setActive2] = useState(false);
+  const [active3, setActive3] = useState(false);
+
    const activeFilters = useFilters()
    const addFilter = useAddFilter()
    const removeFilter = useRemoveFilter()
    const resetFilters = useResetFilters()
 
   const handleFilterClick = (filter) => {
-    console.log('handleFilter')
     if(activeFilters.includes(filter)) {
       removeFilter(filter)
     } else if(!(activeFilters.includes(filter))) {
       addFilter(filter)
     }
+    if(filter[filter.length-1] === '1' ) setActive1(!active1)
+    if (filter[filter.length-1] === "2") setActive2(!active2);
+    if (filter[filter.length-1] === "3") setActive3(!active3);
+  }
+
+  const handleResetClick = () => {
+    resetFilters()
+    setActive1(false)
+    setActive2(false)
+    setActive3(false)
+
   }
 
   useEffect(() => {
-    console.log(activeFilters)
   }, [activeFilters])
+
 
 
     return (
       <div className="filter-bar">
         <div>
-          <p
-            className={`filter-button`}
-            onClick={(e) => resetFilters()}
-          >
+          <p className={`filter-button`} onClick={handleResetClick}>
             Reset Filters
           </p>
         </div>
         <div>
           <p
-            className={`filter-button`}
-            onClick={(e) => handleFilterClick("Filter One")}
+            className={`filter-button ${active1 && "active"}`}
+            onClick={(e) => handleFilterClick(e.target.innerText)}
           >
-            Filter One
+            Filter 1
           </p>
         </div>
         <div>
           <p
-            className={`filter-button `}
-            onClick={(e) => handleFilterClick("Filter Two")}
+            className={`filter-button ${active2 && "active"}`}
+            onClick={(e) => handleFilterClick(e.target.innerText)}
           >
-            Filter Two
+            Filter 2
           </p>
         </div>
         <div>
           <p
-            className={`filter-button`}
-            onClick={(e) => handleFilterClick("Filter Three")}
+            className={`filter-button ${active3 && "active"}`}
+            onClick={(e) => handleFilterClick(e.target.innerText)}
           >
-            Filter Three
+            Filter 3
           </p>
         </div>
       </div>

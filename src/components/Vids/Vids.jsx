@@ -8,17 +8,29 @@ export const Vids = () => {
   const activeFilters = useFilters()
 
 
+
   useEffect(() => {
     if (activeFilters.length === 0) {
       setActiveFiles(videoFileNames);
+    } else {
+      let newFiles = []
+      for(let file of videoFileNames) {
+        let {path, filter} = file 
+        if(activeFilters.includes(filter)) {
+          newFiles.push(file)
+        }
+      }
+      setActiveFiles(newFiles);
+
     }
+
   }, [activeFilters]);
 
   return (
     <div className="videos-main">
       {activeFiles.map((file) => {
-        let tag = Math.floor(Math.random() * 3);
-        return <Video url={file} key={file} tag={tag} />;
+        let filter = Math.floor(Math.random() * 3) + 1;
+        return <Video url={file.path} key={file.path} filter={filter} />;
       })}
     </div>
   );
