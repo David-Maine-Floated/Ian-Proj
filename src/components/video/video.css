@@ -1,7 +1,6 @@
 .video-container {
     width: 400px;
     height: 250px;
-
 }
 
 .fit-video {
@@ -9,3 +8,4 @@
     height: 100%;
     /* object-fit: cover; */
 }
+
